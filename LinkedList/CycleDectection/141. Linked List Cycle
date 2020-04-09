@@ -1,3 +1,4 @@
+//Floyd's Algo
 func hasCycle(_ head: ListNode?) -> Bool {
     
     var slow: ListNode? = head
@@ -11,4 +12,32 @@ func hasCycle(_ head: ListNode?) -> Bool {
         }
     }
     return false
+}
+
+//Brent's Algo
+func hasCycle(_ head: ListNode?) -> Bool {
+    var turtle: ListNode? = head
+    var bunny: ListNode? = head
+    var stepsTaken = 0
+    var stepLimit = 2
+    
+    while true {
+        if bunny == nil{
+            return false
+        }
+        bunny = bunny?.next
+        
+        stepsTaken += 1
+        
+        if bunny === turtle{
+            return true
+        }
+        
+        if stepsTaken == stepLimit {
+            stepsTaken = 0
+            stepLimit *= 2
+            //teleport turtle
+            turtle = bunny
+        }
+    }
 }
