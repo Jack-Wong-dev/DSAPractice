@@ -4,9 +4,9 @@ func minDepth(_ root: TreeNode?) -> Int {
     guard let root = root else{
         return 0
     }
-    let depL = minDepth(root.left)
-    let depR = minDepth(root.right)
-    return 1 + ((depL==0 || depR==0) ? max(depL, depR) : min(depL, depR))
+    let leftDepth = minDepth(root.left)
+    let rightDepth = minDepth(root.right)
+    return 1 + ((leftDepth==0 || rightDepth==0) ? max(leftDepth, rightDepth) : min(leftDepth, rightDepth))
 }
 
 
