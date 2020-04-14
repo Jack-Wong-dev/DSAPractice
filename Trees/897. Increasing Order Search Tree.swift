@@ -7,19 +7,17 @@ func increasingBST(_ root: TreeNode?) -> TreeNode? {
 }
 
 func inOrderTraverse(node: TreeNode?, output: inout TreeNode?, prev: inout TreeNode?) {
-    if node == nil {
-        return
-    }
+    guard let node = node else{ return }
     
-    if let node = node {
-        inOrderTraverse(node: node.left, output: &output, prev: &prev)
-        if let _ = output {
-            prev?.right = node
-        } else {
-            output = node
-        }
-        prev = node
-        node.left = nil
-        inOrderTraverse(node: node.right, output: &output, prev: &prev)
+    inOrderTraverse(node: node.left, output: &output, prev: &prev)
+    
+    if let _ = output {
+        prev?.right = node
+    } else {
+        output = node
     }
+    prev = node
+    node.left = nil
+    inOrderTraverse(node: node.right, output: &output, prev: &prev)
 }
+
