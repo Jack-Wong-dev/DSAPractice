@@ -103,3 +103,71 @@ class Heap<T: Comparable> {
         heapifyUp()
     }
 }
+
+
+//Another implementation
+class Heap<T : Comparable>{
+    
+    //MARK:- Properties
+    var heapArray : [T] = []
+    
+    var isEmpty : Bool{
+        return heapArray.count == 0
+    }
+    
+    //MARK: - Get Indicies
+    private func getLeftChildIndex(_ parentIndex: Int) -> Int {
+        return 2 * parentIndex + 1
+    }
+    private func getRightChildIndex(_ parentIndex: Int) -> Int {
+        return 2 * parentIndex + 2
+    }
+    private func getParentIndex(_ childIndex: Int) -> Int {
+        return (childIndex - 1) / 2
+    }
+    
+    //MARK: - Operations
+    private func heapifyUp(_ index: Int){
+        if heapArray[index] < heapArray[getParentIndex(index)] {
+            heapArray.swapAt( index,getParentIndex(index))
+            let newindex = getParentIndex(index)
+            heapifyUp(newindex)
+        }
+    }
+    
+    private func heapifyDown(_ index : Int){
+        if getLeftChildIndex(index) < heapArray.count  && getRightChildIndex(index) < heapArray.count{
+            let smaller = min(heapArray[getLeftChildIndex(index)], heapArray[getRightChildIndex(index)])
+            let smallidx = heapArray.firstIndex(of: smaller)
+            if heapArray[index] > smaller {
+                heapArray.swapAt( index, smallidx!)
+                heapifyDown(smallidx!)
+            }
+        }else if getLeftChildIndex(index) < heapArray.count {
+            if heapArray[index] > heapArray[getLeftChildIndex(index)] {
+                heapArray.swapAt( index, getLeftChildIndex(index))
+                heapifyDown(getLeftChildIndex(index))
+            }
+        }
+    }
+    
+    func extract() -> T?{
+        if heapArray.isEmpty{
+            return nil
+        }
+        else{
+            heapArray.swapAt( 0, heapArray.count-1)
+            let min = heapArray.removeLast()
+            heapifyDown(0)
+            return min
+        }
+    }
+    
+    
+    func insert(element : T){
+        heapArray.append(element)
+        heapifyUp(heapArray.count-1)
+    }
+    
+}
+
